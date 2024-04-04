@@ -1,0 +1,45 @@
+service: softtek-swapi
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-1
+  apiGateway:
+    shouldStartNameWithService: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+          Resource: '*'
+
+resources:
+  Resources:
+    TablaPersonas:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Persona
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+
+functions:
+  app:
+    handler: dist/handler.handler
+    events:
+      - httpApi:
+          method: any
+          path: /{any+}
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
