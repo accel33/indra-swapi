@@ -45,6 +45,12 @@ https://documenter.getpostman.com/view/3273833/2s9YR6atkQ
 
 ---
 
+### Documentación Swagger
+
+https://47hntlg2v4.execute-api.us-east-1.amazonaws.com/api
+
+---
+
 ### Pruebas en desarrollo
 
 ![My Image](images/pruebas.png)
