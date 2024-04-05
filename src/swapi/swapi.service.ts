@@ -42,7 +42,6 @@ export class SwapiService {
 
       // Traducir data
       const dataTraducida = await this.traducirUno(data);
-      console.log('dataTraducida:', dataTraducida);
 
       // Validar data
       const err: ErrorValidacion = await validatorDto(CrearPersonaDto, dataTraducida);
@@ -74,8 +73,8 @@ export class SwapiService {
   async traducirData(data: any) {
     let json: any = {};
     json = await this.traducirUno(data);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { resultados, ...jsonPrimerNivel } = json;
-    console.log(resultados);
     const todosLosResultados = [];
     for (const resultados of data.results) {
       todosLosResultados.push(await this.traducirUno(resultados));
