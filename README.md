@@ -20,11 +20,15 @@ npm install
    ```
    npm start
    ```
-2. Comando para ejecutar las pruebas unitarias de la aplicación en un entorno local:
+2. Comando para correr en desarrollo, recompila al guardar cambios en tiempo real:
+   ```
+   npm run dev
+   ```
+3. Comando para ejecutar las pruebas unitarias de la aplicación en un entorno local:
    ```
    npm test
    ```
-3. Comando para desplegar la aplicación en un AWS (Se requiere configuración previa del CLI de serverless):
+4. Comando para desplegar la aplicación en un AWS (Se requiere configuración previa del CLI de serverless):
    ```
    sls deploy
    ```

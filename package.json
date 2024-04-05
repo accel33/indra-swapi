@@ -7,7 +7,8 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "start": "npm run build && sls offline",
+    "start": "npm run build && sls offline start --watch",
+    "dev": "nodemon --exec 'tsc-watch --onSuccess \"sls offline start\"'",
     "test": "jest",
     "watch": "jest --watch",
     "cov": "jest --coverage",
@@ -49,6 +50,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "jest": "^29.5.0",
+    "nodemon": "^3.1.0",
     "prettier": "^3.0.0",
     "serverless-dotenv-plugin": "^6.0.0",
     "serverless-offline": "^13.2.0",
@@ -57,6 +59,7 @@
     "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
+    "tsc-watch": "^6.2.0",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.3"
   },
