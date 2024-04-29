@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "start": "npm run build && sls offline start --watch",
+    "start": "npm run build && sls offline start",
     "dev": "nodemon --exec 'tsc-watch --onSuccess \"sls offline start\"'",
     "test": "jest",
     "watch": "jest --watch",
