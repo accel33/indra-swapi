@@ -1,4 +1,4 @@
-# Softtek Traduce SWAPI y Starwars CRUD App
+# Indra Traduce SWAPI y Starwars CRUD App
 
 ### Configuración inicial - Comandos a ejecutar
 
