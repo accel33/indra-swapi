@@ -4,6 +4,7 @@ import { DynamoDBService } from '../dynamo-db/dynamo-db.service';
 import { CrearPersonaDto } from '../personas/dto/crear-persona.dto';
 import { Translate } from '../utils/translate';
 import { ErrorValidacion, validatorDto } from '../utils/validator-dto';
+import { SwapiPerson } from './interfaces/swapi.interface';
 
 @Injectable()
 export class SwapiService {
@@ -29,8 +30,11 @@ export class SwapiService {
   async obtenerUnaPersonaTraducir(id: number): Promise<any> {
     try {
       const data = await this.obtenerDataSwapi(`${this.baseUrl}/people/${id}/`);
-      const dataTraducida = await this.traducirUno(data);
-      return JSON.stringify(dataTraducida, null, 2);
+      if (data) {
+        const dataTraducida = await this.traducirUno(data);
+        return JSON.stringify(dataTraducida, null, 2);
+      }
+      return 'No se encontró el personaje';
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
@@ -65,8 +69,17 @@ export class SwapiService {
       const response = await axios.get(url);
       return response.data;
     } catch (error) {
-      console.error('Error al obtener data swapi:', error);
-      throw new Error('Error al obtener data swapi');
+      if (error.response && error.response.status === 404) {
+        // Handle 404 error
+        console.error(
+          'No se encontró el recurso solicitado. Por favor, inténtelo nuevamente con un recurso válido.',
+        );
+        // Display a user-friendly message
+      } else {
+        // Handle other errors
+        console.error('Ocurrió un error al obtener los datos:', error.message);
+        throw new InternalServerErrorException(error.message);
+      }
     }
   }
 
@@ -85,16 +98,23 @@ export class SwapiService {
     };
   }
 
-  async traducirUno(data: any) {
+  async traducirUno(data: SwapiPerson) {
     const resultados = data;
+    console.log('resultados:', resultados);
 
-    const llaves = Object.keys(resultados);
-    const valores = llaves.map((key) => resultados[key]);
+    const llaves: string[] = Object.keys(resultados);
+    const valores: string[] = llaves.map((key) => resultados[key]);
+    console.log('llaves:', llaves);
+    console.log('valores:', valores);
 
     const llavesString = llaves.join(`\n `);
+    console.log('llavesString:', llavesString);
 
     const llavesStringTraducidas = await this.translator.translateText(llavesString);
+    console.log('llavesStringTraducidas:', llavesStringTraducidas);
+
     const llavesArregloTraducidas = llavesStringTraducidas.split('\n ');
+    console.log('llavesArregloTraducidas:', llavesArregloTraducidas);
 
     const objetoTraducido: { [key: string]: string } = {};
 

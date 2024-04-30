@@ -19,8 +19,14 @@ export class SwapiController {
   @ApiOperation({
     summary: 'Obtener los datos de un personaje de Starwars, lo traduce a español',
   })
-  obtenerUnaPersonaTraducir(@Param('id') id: number): Promise<string> {
-    return this.swapiService.obtenerUnaPersonaTraducir(id);
+  async obtenerUnaPersonaTraducir(@Param('id') id: number): Promise<string> {
+    try {
+      const persona = await this.swapiService.obtenerUnaPersonaTraducir(id);
+      return persona;
+    } catch (error) {
+      console.error(error);
+      return 'Error al obtener la información del personaje';
+    }
   }
 
   @Post(':id')
